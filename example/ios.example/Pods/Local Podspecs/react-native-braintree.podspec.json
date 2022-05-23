@@ -1,0 +1,21 @@
+{
+  "name": "react-native-braintree",
+  "version": "0.1.0",
+  "summary": "React native client wrapper for BrainTree sdk",
+  "homepage": "https://github.com/parmesanking/react-native-braintree#readme",
+  "license": "MIT",
+  "authors": "Luca Agostini <luca.agostini@vividseats.com> (https://github.com/parmesanking)",
+  "platforms": {
+    "ios": "10.0"
+  },
+  "source": {
+    "git": "https://github.com/parmesanking/react-native-braintree.git",
+    "tag": "0.1.0"
+  },
+  "source_files": "ios/**/*.{h,m,mm,swift}",
+  "dependencies": {
+    "React-Core": [
+
+    ]
+  }
+}

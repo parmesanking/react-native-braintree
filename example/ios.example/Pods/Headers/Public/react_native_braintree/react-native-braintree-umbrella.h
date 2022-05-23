@@ -1,0 +1,1 @@
+../../../Target Support Files/react-native-braintree/react-native-braintree-umbrella.h

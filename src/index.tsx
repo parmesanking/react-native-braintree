@@ -9,14 +9,12 @@ const LINKING_ERROR =
 const Braintree = NativeModules.Braintree
   ? NativeModules.Braintree
   : new Proxy(
-      {},
-      {
-        get() {
-          throw new Error(LINKING_ERROR);
-        },
-      }
-    );
+    {},
+    {
+      get() {
+        throw new Error(LINKING_ERROR);
+      },
+    }
+  );
 
-export function multiply(a: number, b: number): Promise<number> {
-  return Braintree.multiply(a, b);
-}
+export default Braintree

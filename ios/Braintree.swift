@@ -97,9 +97,36 @@ class BrainTreeDropIn: NSObject {
             DispatchQueue.main.async {
               if let nonce = tokenizedPayPalAccount?.nonce {
                   
-                  let data: [String: Any] = [
-                    "nonce": nonce
-                  ]
+                  var data: [String: Any] = [
+                    "nonce": nonce,
+                    "firstName":tokenizedPayPalAccount?.firstName ?? "",
+                    "lastName":tokenizedPayPalAccount?.lastName ?? ""
+                   ]
+                
+                  if let billingAddress = tokenizedPayPalAccount?.billingAddress {
+                    var dict:  [String: Any] = [:]
+                    dict["recipientName"] = billingAddress.recipientName
+                    dict["streetAddress"] = billingAddress.streetAddress
+                    dict["extendedAddress"] = billingAddress.extendedAddress
+                    dict["locality"] = billingAddress.locality
+                    dict["countryCodeAlpha2"] = billingAddress.countryCodeAlpha2
+                    dict["postalCode"] = billingAddress.postalCode
+                    dict["region"] = billingAddress.region
+                    data["billingAddress"] = dict
+                  }
+                
+                  if let shippingAddress = tokenizedPayPalAccount?.shippingAddress{
+                    var dict:  [String: Any] = [:]
+                    dict["recipientName"] = shippingAddress.recipientName
+                    dict["streetAddress"] = shippingAddress.streetAddress
+                    dict["extendedAddress"] = shippingAddress.extendedAddress
+                    dict["locality"] = shippingAddress.locality
+                    dict["countryCodeAlpha2"] = shippingAddress.countryCodeAlpha2
+                    dict["postalCode"] = shippingAddress.postalCode
+                    dict["region"] = shippingAddress.region
+                    data["shippingAddress"] = dict
+                  }
+                
                   resolve(data)
                 } else{
                   reject("Fetch card token error","Error tokenizing PayPal account", error)

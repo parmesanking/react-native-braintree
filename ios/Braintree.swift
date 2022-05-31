@@ -148,7 +148,9 @@ class BrainTreeDropIn: NSObject, PKPaymentAuthorizationViewControllerDelegate {
                     
                     resolve(data)
                 } else{
-                    reject("Fetch card token error","Error tokenizing PayPal account", error)
+                    let errDesc = (error as? NSError)?.userInfo["NSLocalizedDescription"] as? String
+                    
+                    reject("Fetch card token error", errDesc ?? "Unable to generate nonce for PayPal flow", error)
                 }
             }
         })
@@ -270,6 +272,7 @@ class BrainTreeDropIn: NSObject, PKPaymentAuthorizationViewControllerDelegate {
          request.requiredShippingContactFields = email != nil ? [.phoneNumber] : [.emailAddress, .phoneNumber]
          }
          */
+        request.requiredShippingContactFields = [.name, .phoneNumber,.postalAddress]
         
         DispatchQueue.main.async {
             guard let viewController = PKPaymentAuthorizationViewController(paymentRequest: request) else {

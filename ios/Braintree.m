@@ -24,6 +24,13 @@ RCT_EXTERN_METHOD(fetchPayPalNonce:
                   reject:(RCTPromiseRejectBlock)reject
                   )
 
+RCT_EXTERN_METHOD(fetchApplePayNonce:
+                  (NSDictionary)quote
+                  settings:(NSDictionary)settings
+                  resolve:(RCTPromiseResolveBlock)resolve
+                  reject:(RCTPromiseRejectBlock)reject
+                  )
+
 RCT_EXTERN_METHOD(showDropIn:
                   (NSString)clientToken
                   resolve:(RCTPromiseResolveBlock)resolve

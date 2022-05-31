@@ -23,9 +23,10 @@ class BrainTreeDropIn: NSObject, PKPaymentAuthorizationViewControllerDelegate {
     
     private var accountId:String = ""
     private var clientToken:String = ""
-    
+    private var applePayAuthorized:Bool = false
     private var resolve:RCTPromiseResolveBlock!
     private var reject:RCTPromiseRejectBlock!
+    private var paymentCompletedCallback:((PKPaymentAuthorizationStatus) ->Void)?
     
     override init() {
         //Get reference of root view controller
@@ -158,14 +159,17 @@ class BrainTreeDropIn: NSObject, PKPaymentAuthorizationViewControllerDelegate {
     
     @objc
     func fetchApplePayNonce(_ quote:NSDictionary,
-                              settings: NSDictionary,
-                              resolve: @escaping RCTPromiseResolveBlock,
-                              reject: @escaping  RCTPromiseRejectBlock) {
+                            settings: NSDictionary,
+                            resolve: @escaping RCTPromiseResolveBlock,
+                            reject: @escaping  RCTPromiseRejectBlock) {
         
         //let quantity = quote["quantity"]
         
         self.resolve=resolve
         self.reject=reject
+        
+        self.applePayAuthorized = false
+        self.paymentCompletedCallback = nil
         
         
         let request = PKPaymentRequest()
@@ -318,22 +322,25 @@ class BrainTreeDropIn: NSObject, PKPaymentAuthorizationViewControllerDelegate {
         }
     
     
-    func paymentAuthorizationViewController(_ controller: PKPaymentAuthorizationViewController, didAuthorizePayment payment: PKPayment, completion: @escaping (PKPaymentAuthorizationStatus) -> Void) {
+    func paymentAuthorizationViewController(_ controller: PKPaymentAuthorizationViewController, didAuthorizePayment payment: PKPayment,  completion: @escaping (PKPaymentAuthorizationStatus) -> Void) {
         
         finalizeApplePayNonce(payment: payment, handler: { [weak self] (nonce, error) in
             guard let self = self else { return }
             
-            let genericFailure = PKPaymentAuthorizationResult(status: .failure, errors: nil)
             
             guard let nonce = nonce else {
+                completion(PKPaymentAuthorizationStatus.failure)
                 self.reject("ApplePay error","Token not generated",error)
                 return
             }
             
+            
             let data: [String: Any] = [
                 "nonce": nonce
             ]
+            self.paymentCompletedCallback = completion
             self.resolve(data)
+            self.applePayAuthorized = true
             
             
             
@@ -341,8 +348,31 @@ class BrainTreeDropIn: NSObject, PKPaymentAuthorizationViewControllerDelegate {
     }
     
     
+    @objc
+    func completeApplePayment(_ completed:Bool,  resolve: @escaping RCTPromiseResolveBlock,
+                              reject: @escaping  RCTPromiseRejectBlock) {
+        
+        guard let complete = self.paymentCompletedCallback else {
+            reject("ApplePay error","Invalid status, unable to complete the payment",nil)
+            return
+        }
+        
+        
+        if (completed){
+            complete(PKPaymentAuthorizationStatus.success)
+        }else{
+            complete(PKPaymentAuthorizationStatus.failure)
+        }
+        resolve(true)
+    }
+    
+    
     func paymentAuthorizationViewControllerDidFinish(_ controller: PKPaymentAuthorizationViewController) {
-        print("TODO: tokenize!")
+        controller.dismiss(animated: true)
+        if (!self.applePayAuthorized){
+            
+            self.reject("APPLE_PAY_CANCELLED", "APPLE_PAY_USER_CANCELLED", nil)
+        }
     }
     
     

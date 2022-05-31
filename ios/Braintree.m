@@ -31,6 +31,12 @@ RCT_EXTERN_METHOD(fetchApplePayNonce:
                   reject:(RCTPromiseRejectBlock)reject
                   )
 
+RCT_EXTERN_METHOD(completeApplePayment:
+                  (BOOL)completed
+                  resolve:(RCTPromiseResolveBlock)resolve
+                  reject:(RCTPromiseRejectBlock)reject
+                  )
+
 RCT_EXTERN_METHOD(showDropIn:
                   (NSString)clientToken
                   resolve:(RCTPromiseResolveBlock)resolve

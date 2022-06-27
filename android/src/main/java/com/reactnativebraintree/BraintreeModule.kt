@@ -14,7 +14,7 @@ class BraintreeModule(reactContext: ReactApplicationContext) : ReactContextBaseJ
     val appContext:Context = reactContext.applicationContext
 
   override fun getName(): String {
-        return "Braintree"
+        return "BrainTreeDropIn"
     }
 
     // Example method

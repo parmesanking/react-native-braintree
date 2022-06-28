@@ -24,7 +24,7 @@ class BraintreeModule(reactContext: ReactApplicationContext) : ReactContextBaseJ
 
       try {
         var  apiClient: BraintreeClient = BraintreeClient(appContext, clientToken)
-        if(apiClient != null){
+        if(apiClient == null){
           throw Error("unable to instanciate apiClient")
         }
 
@@ -41,7 +41,11 @@ class BraintreeModule(reactContext: ReactApplicationContext) : ReactContextBaseJ
 
         cardClient.tokenize(card){ cardNonce, error ->
           cardNonce?.let {
-            promise.resolve(cardNonce)
+
+            var data: WritableMap = Arguments.createMap()
+            data.putString("nonce", cardNonce.string )
+
+            promise.resolve(data)
           } ?: run {
             promise.reject("Fetch card token error","Error tokenizing credit card", error)
           }
@@ -51,7 +55,7 @@ class BraintreeModule(reactContext: ReactApplicationContext) : ReactContextBaseJ
         promise.reject(e)
       }
 
-    }
+  }
 
 
 }

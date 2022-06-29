@@ -28,11 +28,11 @@ class BraintreeModule(reactContext: ReactApplicationContext) :
   @ReactMethod
   fun fetchCardNonce(
     clientToken: String,
-    number: String,
-    expirationMonth: String,
-    expirationYear: String,
+    number: String?,
+    expirationMonth: String?,
+    expirationYear: String?,
     cvv: String,
-    name: String,
+    name: String?,
     promise: Promise
   ) {
 
@@ -44,14 +44,13 @@ class BraintreeModule(reactContext: ReactApplicationContext) :
 
       var cardClient: CardClient = CardClient(apiClient)
       var card = Card()
-      if (number != null && number != "") {
-        card.number = number
-        card.expirationMonth = number
-        card.number = expirationMonth
-        card.expirationYear = expirationYear
-        card.cardholderName = name
-      }
+      card.number = number
       card.cvv = cvv
+      card.expirationMonth = number
+      card.number = expirationMonth
+      card.expirationYear = expirationYear
+      card.cardholderName = name
+
 
       cardClient.tokenize(card) { cardNonce, error ->
         cardNonce?.let {

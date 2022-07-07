@@ -46,8 +46,8 @@ class BraintreeModule(reactContext: ReactApplicationContext) :
       var card = Card()
       card.number = number
       card.cvv = cvv
-      card.expirationMonth = number
-      card.number = expirationMonth
+      card.expirationMonth = expirationMonth
+      card.number = number
       card.expirationYear = expirationYear
       card.cardholderName = name
 

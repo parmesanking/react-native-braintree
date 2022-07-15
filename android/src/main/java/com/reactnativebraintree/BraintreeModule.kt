@@ -115,6 +115,7 @@ class BraintreeModule(reactContext: ReactApplicationContext) :
             address.putString("streetAddress", payPalAccountNonce.billingAddress.streetAddress)
             address.putString("extendedAddress", payPalAccountNonce.billingAddress.extendedAddress)
             address.putString("locality", payPalAccountNonce.billingAddress.locality)
+            address.putString("region", payPalAccountNonce.billingAddress.region)
             address.putString(
               "countryCodeAlpha2",
               payPalAccountNonce.billingAddress.countryCodeAlpha2

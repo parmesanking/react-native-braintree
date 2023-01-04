@@ -16,5 +16,6 @@ Pod::Spec.new do |s|
   s.source_files = "ios/**/*.{h,m,mm,swift}"
 
   s.dependency "React-Core"
-  s.dependency "BraintreeDropIn", "= 9.6.1"
+  s.dependency "BraintreeDropIn", "~> 9.7.0"
+  s.dependency "Braintree/UnionPay", "= 5.17"
 end

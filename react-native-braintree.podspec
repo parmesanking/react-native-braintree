@@ -17,5 +17,5 @@ Pod::Spec.new do |s|
 
   s.dependency "React-Core"
   s.dependency "BraintreeDropIn", "~> 9.7.0"
-  s.dependency "Braintree/UnionPay", "= 5.17"
+  s.dependency "Braintree", "= 5.17"
 end

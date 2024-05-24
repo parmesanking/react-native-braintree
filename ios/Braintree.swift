@@ -432,5 +432,43 @@ class BrainTreeDropIn: NSObject, PKPaymentAuthorizationViewControllerDelegate {
             self.reactRoot.present(dropIn!, animated: true, completion: nil)
         }
     }
+
+    @objc
+    func startPayPalCheckout(_ clientToken: String,
+                        agreementDescription: String,
+                        completed:Bool,
+                        resolve: @escaping RCTPromiseResolveBlock,
+                             reject: @escaping  RCTPromiseRejectBlock) {
+        
+        
+        guard let apiClient = BTAPIClient(authorization: clientToken) else {
+            let error = NSError(domain: "", code: 100, userInfo: nil)
+            reject("PayPal vault token error","Unable to create api client for PayPal checkout", error)
+            return
+        }
+        
+        let payPalDriver = BTPayPalDriver(apiClient: apiClient!)
+        
+        let request = BTPayPalVaultRequest()
+        request.billingAgreementDescription = agreementDescription // Displayed in customer's PayPal account
+        payPalDriver.tokenizePayPalAccount(with: request) { (tokenizedPayPalAccount, error) -> Void in
+            DispatchQueue.main.async {
+                if let tokenizedPayPalAccount = tokenizedPayPalAccount {
+                    let data: [String: Any] = [
+                        "nonce": tokenizedPayPalAccount.nonce
+                    ]
+                    resolve(data)
+                }else if let error = error {
+                    let errDesc = (error as? NSError)?.userInfo["NSLocalizedDescription"] as? String
+                    
+                    reject("PayPal error", errDesc ?? "Unable to generate nonce for PayPal flow", error)
+                    
+                } else {
+                    reject("PayPal user canceled","PayPal user canceled", nil)
+                }
+            }
+        }
+        
+    }
 }
 

@@ -1,32 +1,36 @@
 PODS:
   - boost (1.76.0)
-  - Braintree/ApplePay (5.9.0):
+  - Braintree (5.24.1):
+    - Braintree/Card (= 5.24.1)
+    - Braintree/Core (= 5.24.1)
+    - Braintree/PayPal (= 5.24.1)
+  - Braintree/ApplePay (5.24.1):
     - Braintree/Core
-  - Braintree/Card (5.9.0):
+  - Braintree/Card (5.24.1):
     - Braintree/Core
-  - Braintree/Core (5.9.0)
-  - Braintree/PaymentFlow (5.9.0):
+  - Braintree/Core (5.24.1)
+  - Braintree/PaymentFlow (5.24.1):
     - Braintree/Core
     - Braintree/PayPalDataCollector
-  - Braintree/PayPal (5.9.0):
+  - Braintree/PayPal (5.24.1):
     - Braintree/Core
     - Braintree/PayPalDataCollector
-  - Braintree/PayPalDataCollector (5.9.0)
-  - Braintree/ThreeDSecure (5.9.0):
+  - Braintree/PayPalDataCollector (5.24.1)
+  - Braintree/ThreeDSecure (5.24.1):
     - Braintree/Card
     - Braintree/PaymentFlow
-  - Braintree/UnionPay (5.9.0):
+  - Braintree/UnionPay (5.24.1):
     - Braintree/Card
-  - Braintree/Venmo (5.9.0):
+  - Braintree/Venmo (5.24.1):
     - Braintree/Core
-  - BraintreeDropIn (9.5.0):
-    - Braintree/ApplePay (~> 5.8)
-    - Braintree/Card (~> 5.8)
-    - Braintree/Core (~> 5.8)
-    - Braintree/PayPal (~> 5.8)
-    - Braintree/ThreeDSecure (~> 5.8)
-    - Braintree/UnionPay (~> 5.8)
-    - Braintree/Venmo (~> 5.8)
+  - BraintreeDropIn (9.10.1):
+    - Braintree/ApplePay (~> 5.23)
+    - Braintree/Card (~> 5.23)
+    - Braintree/Core (~> 5.23)
+    - Braintree/PayPal (~> 5.23)
+    - Braintree/ThreeDSecure (~> 5.23)
+    - Braintree/UnionPay (~> 5.23)
+    - Braintree/Venmo (~> 5.23)
   - DoubleConversion (1.1.6)
   - FBLazyVector (0.68.2)
   - FBReactNativeSpec (0.68.2):
@@ -245,8 +249,9 @@ PODS:
   - React-jsinspector (0.68.2)
   - React-logger (0.68.2):
     - glog
-  - react-native-braintree (0.1.0):
-    - BraintreeDropIn
+  - react-native-braintree (0.1.4):
+    - Braintree (= 5.24.1)
+    - BraintreeDropIn (~> 9.10.1)
     - React-Core
   - React-perflogger (0.68.2)
   - React-RCTActionSheet (0.68.2):
@@ -425,8 +430,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   boost: a7c83b31436843459a1961bfd74b96033dc77234
-  Braintree: 0fc239fcba70ed286130ed38ea18e3da6b7e9259
-  BraintreeDropIn: c6ca148e8c26110202052e38ec90ffae21f7ec41
+  Braintree: b6e1377bf862bbc26b8c0c0f89b8653d5e730214
+  BraintreeDropIn: c1916fb471c4316b91f35a144ea9b7d2a511aad3
   DoubleConversion: 831926d9b8bf8166fd87886c4abab286c2422662
   FBLazyVector: a7a655862f6b09625d11c772296b01cd5164b648
   FBReactNativeSpec: 81ce99032d5b586fddd6a38d450f8595f7e04be4
@@ -445,7 +450,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: b7b553412f2ec768fe6c8f27cd6bafdb9d8719e6
   React-jsinspector: c5989c77cb89ae6a69561095a61cce56a44ae8e8
   React-logger: a0833912d93b36b791b7a521672d8ee89107aff1
-  react-native-braintree: 2122cbbd62fdcebaa9876e123238ea71b9ffd10f
+  react-native-braintree: e40299f2819547aeac4eb1bc239e33bb45c335f5
   React-perflogger: a18b4f0bd933b8b24ecf9f3c54f9bf65180f3fe6
   React-RCTActionSheet: 547fe42fdb4b6089598d79f8e1d855d7c23e2162
   React-RCTAnimation: bc9440a1c37b06ae9ebbb532d244f607805c6034
@@ -462,4 +467,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 93e252ee43ebd179f16eb6eb9c872cde1e630e58
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.14.3

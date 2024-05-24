@@ -436,9 +436,8 @@ class BrainTreeDropIn: NSObject, PKPaymentAuthorizationViewControllerDelegate {
     @objc
     func startPayPalCheckout(_ clientToken: String,
                         agreementDescription: String,
-                        completed:Bool,
                         resolve: @escaping RCTPromiseResolveBlock,
-                             reject: @escaping  RCTPromiseRejectBlock) {
+                        reject: @escaping  RCTPromiseRejectBlock) {
         
         
         guard let apiClient = BTAPIClient(authorization: clientToken) else {
@@ -447,7 +446,7 @@ class BrainTreeDropIn: NSObject, PKPaymentAuthorizationViewControllerDelegate {
             return
         }
         
-        let payPalDriver = BTPayPalDriver(apiClient: apiClient!)
+        let payPalDriver = BTPayPalDriver(apiClient: apiClient)
         
         let request = BTPayPalVaultRequest()
         request.billingAgreementDescription = agreementDescription // Displayed in customer's PayPal account

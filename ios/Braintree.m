@@ -46,7 +46,6 @@ RCT_EXTERN_METHOD(showDropIn:
 RCT_EXTERN_METHOD(startPayPalCheckout:
                   (NSString)clientToken
                   agreementDescription:(NSString)agreementDescription
-                  sandbox: (BOOL)sandbox
                   resolve:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject
                   )

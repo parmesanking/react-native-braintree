@@ -17,6 +17,7 @@ RCT_EXTERN_METHOD(fetchCardNonce:
                   reject:(RCTPromiseRejectBlock)reject
                   )
 
+
 RCT_EXTERN_METHOD(fetchPayPalNonce:
                   (NSString)clientToken
                   ticketPrice:(NSString)ticketPrice
@@ -43,9 +44,16 @@ RCT_EXTERN_METHOD(showDropIn:
                   reject:(RCTPromiseRejectBlock)reject
                   )
 
+
 RCT_EXTERN_METHOD(startPayPalCheckout:
                   (NSString)clientToken
                   agreementDescription:(NSString)agreementDescription
+                  resolve:(RCTPromiseResolveBlock)resolve
+                  reject:(RCTPromiseRejectBlock)reject
+                  )
+
+RCT_EXTERN_METHOD(collectDeviceData:
+                  (BOOL)sandbox
                   resolve:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject
                   )

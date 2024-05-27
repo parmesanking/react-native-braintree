@@ -128,8 +128,8 @@ dependencies {
   // noinspection GradleDynamicVersion
   api 'com.facebook.react:react-native:+'
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-  implementation 'com.braintreepayments.api:card:4.39.0'
-  implementation 'com.braintreepayments.api:data-collector:4.39.0'
-  implementation 'com.braintreepayments.api:paypal:4.39.0'
-  implementation 'com.braintreepayments.api:google-pay:4.39.0'
+  implementation 'com.braintreepayments.api:card:4.45.0'
+  implementation 'com.braintreepayments.api:data-collector:4.45.0'
+  implementation 'com.braintreepayments.api:paypal:4.45.0'
+  implementation 'com.braintreepayments.api:google-pay:4.45.0'
 }

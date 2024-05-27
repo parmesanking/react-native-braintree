@@ -107,6 +107,12 @@ class BraintreeModule(reactContext: ReactApplicationContext) :
         data.putString("nonce", payPalAccountNonce.string)
         data.putString("firstName", payPalAccountNonce.firstName)
         data.putString("lastName", payPalAccountNonce.lastName)
+        data.putString("clientMetadataID", payPalAccountNonce.clientMetadataId)
+        data.putString("payerID", payPalAccountNonce.payerId)
+        data.putString("email", payPalAccountNonce.email)
+        payPalAccountNonce.isDefault?.let {
+          data.putString("isDefault", payPalAccountNonce.isDefault.toString())
+        }
 
         payPalAccountNonce.billingAddress?.let {
           if (payPalAccountNonce.billingAddress.streetAddress != null) {
@@ -150,6 +156,67 @@ class BraintreeModule(reactContext: ReactApplicationContext) :
   }
 
   override fun onPayPalFailure(error: Exception) {
-    paypalPromise?.reject( error)
+    if (error is UserCanceledException) {
+      // user
+      paypalPromise?.reject("PayPal user canceled","PayPal user canceled", null)
+    }else {
+      paypalPromise?.reject(error)
+    }
   }
+
+  @ReactMethod
+  fun startPayPalCheckout (clientToken: String, agreementDescription: String?, promise:Promise){
+    try {
+      var apiClient: BraintreeClient = BraintreeClient(appContext, clientToken)
+      if (apiClient == null) {
+        throw Error("unable to instanciate apiClient")
+      }
+
+      val request = PayPalVaultRequest()
+      agreementDescription?.let{
+        request.billingAgreementDescription =agreementDescription
+      }
+      paypalPromise = promise
+
+      currentActivity?.runOnUiThread {
+        val payPalClient: PayPalClient =
+          PayPalClient(currentActivity as FragmentActivity, apiClient)
+        payPalClient.setListener(this)
+
+        payPalClient.tokenizePayPalAccount(currentActivity as FragmentActivity, request)
+      }
+
+    } catch (e: Error) {
+      promise.reject(e)
+    }
+
+  }
+
+  @ReactMethod
+  fun collectDeviceData(clientToken: String,
+                        sandbox:Boolean,
+                        promise: Promise){
+
+    try {
+      val apiClient: BraintreeClient = BraintreeClient(appContext, clientToken)
+      val dataCollector = DataCollector(apiClient)
+
+      val dataCollectorRequest = DataCollectorRequest(true)
+      dataCollector.collectDeviceData(appContext, dataCollectorRequest) { deviceData, error ->
+        // send deviceData to your server to be included in verification or transaction requests
+        deviceData?.let {
+
+          promise.resolve(deviceData)
+        } ?: run {
+          promise.reject("Collect data error", "Error collecting device data", error)
+        }
+      }
+
+    }catch(e:Error){
+      promise.reject(e)
+    }
+
+
+  }
+
 }

@@ -512,14 +512,16 @@ class BrainTreeDropIn: NSObject, PKPaymentAuthorizationViewControllerDelegate {
     }
     
     @objc
-    func collectDeviceData(_
+    func collectDeviceData(_ clientToken: String,
                         sandbox: Bool,
                         resolve: @escaping RCTPromiseResolveBlock,
                         reject: @escaping  RCTPromiseRejectBlock) {
-        
-        
+        /*
+            clientToken will be used with the next BrainTree SDK (v6)
+         */
         do {
             let deviceData = try PPDataCollector.collectPayPalDeviceData(isSandbox: sandbox)
+            
             resolve(deviceData)
         } catch {
             reject("PayPal error","PayPal error collecting device data", error)

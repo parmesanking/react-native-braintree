@@ -53,6 +53,7 @@ RCT_EXTERN_METHOD(startPayPalCheckout:
                   )
 
 RCT_EXTERN_METHOD(collectDeviceData:
+                  (NSString)clientToken
                   (BOOL)sandbox
                   resolve:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject

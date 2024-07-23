@@ -52,6 +52,12 @@ RCT_EXTERN_METHOD(startPayPalCheckout:
                   reject:(RCTPromiseRejectBlock)reject
                   )
 
+RCT_EXTERN_METHOD(startVenmoCheckout:
+                  (NSString)clientToken
+                  resolve:(RCTPromiseResolveBlock)resolve
+                  reject:(RCTPromiseRejectBlock)reject
+                  )
+
 RCT_EXTERN_METHOD(collectDeviceData:
                   (NSString)clientToken
                   sandbox:(BOOL)sandbox

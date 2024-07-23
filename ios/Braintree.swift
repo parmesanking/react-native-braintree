@@ -510,6 +510,50 @@ class BrainTreeDropIn: NSObject, PKPaymentAuthorizationViewControllerDelegate {
         }
         
     }
+
+
+    @objc
+    func startVenmoCheckout(_ clientToken: String,
+                        resolve: @escaping RCTPromiseResolveBlock,
+                        reject: @escaping  RCTPromiseRejectBlock) {
+        
+        
+        guard let apiClient = BTAPIClient(authorization: clientToken) else {
+            let error = NSError(domain: "", code: 100, userInfo: nil)
+            reject("PayPal vault token error","Unable to create api client for PayPal checkout", error)
+            return
+        }
+        
+        let venmoClient = BTVenmoDriver(apiClient: apiClient)
+        
+        let request = BTVenmoRequest()
+        request.paymentMethodUsage = .multiUse
+        request.vault = true
+        
+
+        venmoClient.tokenizeVenmoAccount(with: request)  { (venmoAccount, error) in
+            DispatchQueue.main.async {
+                guard let venmoAccount = venmoAccount else {
+                    let errDesc = (error as? NSError)?.userInfo["NSLocalizedDescription"] as? String
+                    
+                    reject("Venmo error", errDesc ?? "Unable to generate nonce for Venmo flow", error)
+                    return
+                }
+                    
+                let data: [String: Any] = [
+                    "nonce": venmoAccount.nonce
+                ]
+                
+                resolve(data)
+
+                }
+            }
+        
+        }
+        
+
+    
+
     
     @objc
     func collectDeviceData(_ clientToken: String,

@@ -18,4 +18,5 @@ Pod::Spec.new do |s|
   s.dependency "React-Core"
   s.dependency "BraintreeDropIn", "~> 9.12.1"
   s.dependency "Braintree", "= 5.26.0"
+  s.dependency "Braintree/Venmo", "= 5.26.0"
 end

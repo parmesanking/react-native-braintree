@@ -305,6 +305,11 @@ class BraintreeModule(reactContext: ReactApplicationContext) :
 
   @ReactMethod
   fun startVenmoCheckout (clientToken: String, promise:Promise){
+    startVenmoCheckout(clientToken, null, promise)
+  }
+
+  @ReactMethod
+  fun startVenmoCheckout (clientToken: String, profileId: String?, promise:Promise){
     try {
 
       apiClient = BraintreeClient(appContext, clientToken)
@@ -314,7 +319,10 @@ class BraintreeModule(reactContext: ReactApplicationContext) :
 
 
       val request = VenmoRequest(VenmoPaymentMethodUsage.MULTI_USE)
-      //request.profileId = "your-profile-id"
+      profileId?.let {
+        request.profileId = profileId
+      }
+
       request.shouldVault = true
       request.fallbackToWeb = true
 

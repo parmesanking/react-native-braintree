@@ -57,6 +57,12 @@ RCT_EXTERN_METHOD(startVenmoCheckout:
                   resolve:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject
                   )
+RCT_EXTERN_METHOD(startVenmoCheckout:
+                  (NSString)clientToken
+                  (NSString)profileId
+                  resolve:(RCTPromiseResolveBlock)resolve
+                  reject:(RCTPromiseRejectBlock)reject
+                  )
 
 RCT_EXTERN_METHOD(collectDeviceData:
                   (NSString)clientToken

@@ -511,9 +511,16 @@ class BrainTreeDropIn: NSObject, PKPaymentAuthorizationViewControllerDelegate {
         
     }
 
+    @objc
+    func startVenmoCheckout(_ clientToken: String,
+                        resolve: @escaping RCTPromiseResolveBlock,
+                            reject: @escaping  RCTPromiseRejectBlock) {
+      startVenmoCheckout(clientToken, profileId: nil, resolve: resolve, reject: reject)
+    }
 
     @objc
     func startVenmoCheckout(_ clientToken: String,
+                            profileId: String?,
                         resolve: @escaping RCTPromiseResolveBlock,
                         reject: @escaping  RCTPromiseRejectBlock) {
         
@@ -527,6 +534,9 @@ class BrainTreeDropIn: NSObject, PKPaymentAuthorizationViewControllerDelegate {
         let venmoClient = BTVenmoDriver(apiClient: apiClient)
         
         let request = BTVenmoRequest()
+        if let profileId {
+          request.profileID = profileId
+        }
         request.paymentMethodUsage = .multiUse
         request.vault = true
         

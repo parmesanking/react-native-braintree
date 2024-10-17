@@ -304,11 +304,6 @@ class BraintreeModule(reactContext: ReactApplicationContext) :
   }
 
   @ReactMethod
-  fun startVenmoCheckout (clientToken: String, promise:Promise){
-    startVenmoCheckout(clientToken, null, promise)
-  }
-
-  @ReactMethod
   fun startVenmoCheckout (clientToken: String, profileId: String?, promise:Promise){
     try {
 

@@ -513,13 +513,6 @@ class BrainTreeDropIn: NSObject, PKPaymentAuthorizationViewControllerDelegate {
 
     @objc
     func startVenmoCheckout(_ clientToken: String,
-                        resolve: @escaping RCTPromiseResolveBlock,
-                            reject: @escaping  RCTPromiseRejectBlock) {
-      startVenmoCheckout(clientToken, profileId: nil, resolve: resolve, reject: reject)
-    }
-
-    @objc
-    func startVenmoCheckout(_ clientToken: String,
                             profileId: String?,
                         resolve: @escaping RCTPromiseResolveBlock,
                         reject: @escaping  RCTPromiseRejectBlock) {
